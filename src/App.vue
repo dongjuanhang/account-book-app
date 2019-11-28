@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class App extends Vue {}
@@ -18,4 +18,5 @@ export default class App extends Vue {}
   -moz-osx-font-smoothing grayscale
   width 100%
   height 100vh
+  background rgba(245,245,245,1)
 </style>

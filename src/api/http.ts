@@ -1,22 +1,22 @@
-import axios from 'axios';
-import { API_URL } from '@/global/const';
-import commonUtil from '@/utils/common';
-import cookie from '@/utils/cookies';
+import axios from "axios";
+import { API_URL } from "@/global/const";
+import commonUtil from "@/utils/common";
+import cookie from "@/utils/cookies";
 
 const http = axios.create({
     timeout: 20000,
     baseURL: API_URL,
-    responseType: 'json',
+    responseType: "json",
     headers: {
         common: {
-            Accept: '*/*',
+            Accept: "*/*",
         },
     },
 });
 
 http.interceptors.request.use(
     (config) => {
-        config.headers.token = cookie.getCookie('token');
+        config.headers.token = cookie.getCookie("token");
         return config;
     },
     (error) => {
@@ -37,26 +37,26 @@ const requestHandle = (params: object) => {
 export default {
     post(url: string, params: any) {
         return requestHandle({
-            method: 'post',
+            method: "post",
             url,
             data: params,
         });
     },
     get(url: string, params: any = null) {
         return requestHandle({
-            method: 'get',
+            method: "get",
             url: commonUtil.queryString(url, params),
         });
     },
     delete(url: string, params: any = null) {
         return requestHandle({
-            method: 'delete',
+            method: "delete",
             url: commonUtil.queryString(url, params),
         });
     },
     put(url: string, params: any) {
         return requestHandle({
-            method: 'put',
+            method: "put",
             url,
             data: params,
         });

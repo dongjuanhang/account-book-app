@@ -7,10 +7,10 @@ export default {
         const list: string[] = [];
         for (const key in query) {
             if (query.hasOwnProperty(key)) {
-                list.push(key + '=' + query[key]);
+                list.push(key + "=" + query[key]);
             }
         }
-        const paramStr: string = list.join('&');
+        const paramStr: string = list.join("&");
         return paramStr ? `${url}?${paramStr}` : url;
     },
 };

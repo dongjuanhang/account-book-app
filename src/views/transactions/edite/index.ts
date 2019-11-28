@@ -1,2 +1,2 @@
-import Edite from './Edite.vue';
+import Edite from "./Edite.vue";
 export default Edite;

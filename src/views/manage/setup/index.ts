@@ -1,2 +1,2 @@
-import Setup from './Setup.vue';
+import Setup from "./Setup.vue";
 export default Setup;

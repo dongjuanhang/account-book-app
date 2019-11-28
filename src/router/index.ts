@@ -1,10 +1,10 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import cookie from '@/utils/cookies';
+import Vue from "vue";
+import VueRouter, { RouteConfig } from "vue-router";
+import cookie from "@/utils/cookies";
 
 Vue.use(VueRouter);
 
-const files = require.context('./routes', true, /\.ts$/);
+const files = require.context("./routes", true, /\.ts$/);
 const routes: RouteConfig[] = [];
 
 files.keys().forEach((item: string) => {
