@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import cookie from "@/utils/cookies";
+import commonUtil from "@/utils/common";
 
 Vue.use(VueRouter);
 
@@ -16,17 +16,11 @@ const router = new VueRouter({
 });
 
 router.beforeResolve((to: any, from: any, next: any) => {
-  // 未登录拦截
-  // if (!!cookie.getCookie('token')) {
-  //   next();
-  // } else {
-  //   if (to.name === 'login') {
-  //     next();
-  //   } else {
-  //     next('/');
-  //   }
-  // }
-  next();
+  if (commonUtil.isLogin() && to.name === "login") {
+    next({name: "transactionsList"});
+  } else {
+    next();
+  }
 });
 
 export default router;

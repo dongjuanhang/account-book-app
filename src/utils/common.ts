@@ -1,3 +1,4 @@
+import cookie from "./cookies";
 export default {
     // 拼接url参数
     queryString(url: string, query: any): string {
@@ -12,5 +13,8 @@ export default {
         }
         const paramStr: string = list.join("&");
         return paramStr ? `${url}?${paramStr}` : url;
+    },
+    isLogin() {
+        return !!cookie.getCookie("token");
     },
 };

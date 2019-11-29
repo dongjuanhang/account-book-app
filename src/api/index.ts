@@ -3,7 +3,7 @@ import http from "./http";
 export const user = {
     // 登陆
     login(params: object) {
-        return http.post("/user/access", params);
+        return http.post("/users/access", params);
     },
 };
 
