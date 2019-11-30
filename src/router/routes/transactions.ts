@@ -1,5 +1,5 @@
 const List = () => import("@/views/transactions/list");
-const Edite = () => import("@/views/transactions/edite");
+const Edit = () => import("@/views/transactions/edit");
 export default [
     {
         name: "transactionsList",
@@ -7,8 +7,8 @@ export default [
         component: List,
     },
     {
-        name: "transactionsEdite",
-        path: "/transactions/edite",
-        component: Edite,
+        name: "transactionsEdit",
+        path: "/transactions/edit",
+        component: Edit,
     },
 ];

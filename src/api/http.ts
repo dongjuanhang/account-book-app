@@ -40,11 +40,11 @@ const requestHandle = (params: object) => {
 
 function validateUnth(data: any) {
     // 未授权或授权过期，重新登录 99999状态码待验证
-    if (data.errorCode === 99999) {
-        commonUtil.delToken();
-        window.location.href = "/";
-        return false;
-    }
+    // if (data.errorCode === 99999) {
+    //     commonUtil.delToken();
+    //     window.location.href = "/";
+    //     return false;
+    // }
     return true;
 }
 

@@ -2,7 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { Button, Icon, Toast, Field, CellGroup, SwipeCell, Cell, NavBar, Loading, RadioGroup, Radio, DatetimePicker, Picker, Panel, Dialog } from "pagoda-mobile";
+import { Button, Icon, Toast, Field, CellGroup, SwipeCell, Cell,
+  NavBar, Loading, RadioGroup, Radio, DatetimePicker, Picker, Panel, Dialog, PullRefresh, List } from "pagoda-mobile";
 
 import "pagoda-mobile/lib/index.css";
 import "./style/base.stylus";
@@ -19,11 +20,12 @@ Vue.use(NavBar);
 Vue.use(Loading);
 Vue.use(RadioGroup);
 Vue.use(Radio);
-// Vue.use(ResultPage);
 Vue.use(DatetimePicker);
 Vue.use(Picker);
 Vue.use(Panel);
 Vue.use(Dialog);
+Vue.use(PullRefresh);
+Vue.use(List);
 
 new Vue({
   router,

@@ -12,6 +12,10 @@ export const transactions = {
     getList(params: object) {
         return http.get('/transactions', params);
     },
+    // 删除交易
+    remove(code: number) {
+        return http.delete(`/transactions/${code}`);
+    },
 };
 
 export const categories = {
@@ -30,5 +34,5 @@ export const categories = {
     // 编辑
     amend(code: number, data: object = {}) {
         return http.put(`/categories/${code}`, data);
-    }
+    },
 };
