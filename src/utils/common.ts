@@ -1,4 +1,5 @@
 import cookie from "./cookies";
+import {toNumber} from "lodash";
 export default {
     // 拼接url参数
     queryString(url: string, query: any): string {
@@ -21,3 +22,7 @@ export default {
         cookie.delCookie("token");
     },
 };
+
+export function isPositive (value: string | number) {
+    return toNumber(value) > 0;
+}
