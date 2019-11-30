@@ -1,14 +1,14 @@
-const List = () => import("@/views/transactions/list");
-const Edite = () => import("@/views/transactions/edite");
+const List = () => import('@/views/transactions/list');
+const Edit = () => import('@/views/transactions/edit');
 export default [
-    {
-        name: "transactionsList",
-        path: "/transactions",
-        component: List,
-    },
-    {
-        name: "transactionsEdite",
-        path: "/transactions/edite",
-        component: Edite,
-    },
+  {
+    name: 'transactionsList',
+    path: '/transactions',
+    component: List,
+  },
+  {
+    name: 'transactionsEdit',
+    path: '/transactions/edit/:mode',
+    component: Edit,
+  },
 ];
