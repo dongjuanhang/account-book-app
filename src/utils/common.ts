@@ -14,7 +14,10 @@ export default {
         const paramStr: string = list.join("&");
         return paramStr ? `${url}?${paramStr}` : url;
     },
-    isLogin() {
-        return !!cookie.getCookie("token");
+    getToken() {
+        return cookie.getCookie("token");
+    },
+    delToken() {
+        cookie.delCookie("token");
     },
 };

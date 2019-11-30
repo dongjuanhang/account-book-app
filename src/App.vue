@@ -17,6 +17,6 @@ export default class App extends Vue {}
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   width 100%
-  height 100vh
+  height 100%
   background rgba(245,245,245,1)
 </style>

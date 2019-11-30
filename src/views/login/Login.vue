@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+
 interface IUserInfo {
   username: string;
   password: string;
@@ -31,6 +32,7 @@ interface IUserInfo {
 import { Vue, Component } from "vue-property-decorator";
 import { user } from "../../api/index";
 import cookie from "../../utils/cookies";
+import { get } from "lodash";
 
 @Component
 export default class Login extends Vue {
@@ -40,18 +42,13 @@ export default class Login extends Vue {
     const { username, password } = this.useInfo;
     if (!!username && !!password) {
       try {
-        const res: any = await user.login(this.useInfo);
-        const { errorCode = -1, message = "请求出错"} = res  || {};
-        if (errorCode === 0) {
-          cookie.setCookie("token", res.data.accessToken, 1);
-          this.$router.push({
-            name: "transactionsList",
-          });
-        } else {
-          this.$toast(message);
-        }
+        const res = await user.login(this.useInfo);
+        cookie.setCookie("token", get(res, "data.accessToken"), 1);
+        this.$router.push({
+          name: "transactionsList",
+        });
       } catch (error) {
-        console.log(error);
+        this.$toast(get(error, "message") || "请求出错");
       }
     } else {
       this.$toast("请输入完整用户信息");

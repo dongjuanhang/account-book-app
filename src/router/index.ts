@@ -16,7 +16,7 @@ const router = new VueRouter({
 });
 
 router.beforeResolve((to: any, from: any, next: any) => {
-  if (commonUtil.isLogin() && to.name === "login") {
+  if (!!commonUtil.getToken() && to.name === "login") {
     next({name: "transactionsList"});
   } else {
     next();

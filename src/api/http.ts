@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "@/global/const";
 import commonUtil from "@/utils/common";
-import cookie from "@/utils/cookies";
+import { isEmpty, get } from "lodash";
 
 const http = axios.create({
     timeout: 20000,
@@ -16,7 +16,7 @@ const http = axios.create({
 
 http.interceptors.request.use(
     (config) => {
-        config.headers.token = cookie.getCookie("token");
+        config.headers.Authorization = commonUtil.getToken();
         return config;
     },
     (error) => {
@@ -28,11 +28,25 @@ const requestHandle = (params: object) => {
     return new Promise((resolve, reject) => {
         http(params).then((res) => {
             resolve(res.data);
-        }).catch((err: any) => {
-            reject(err);
+        }).catch((err) => {
+            const data = get(err, "response.data");
+            if (!isEmpty(data) && !validateUnth(data)) {
+                return;
+            }
+            reject(data);
         });
     });
 };
+
+function validateUnth(data: any) {
+    // 未授权或授权过期，重新登录 99999状态码待验证
+    if (data.errorCode === 99999) {
+        commonUtil.delToken();
+        window.location.href = "/";
+        return false;
+    }
+    return true;
+}
 
 export default {
     post(url: string, params: any) {

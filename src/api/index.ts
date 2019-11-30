@@ -15,8 +15,8 @@ export const transactions = {
 };
 
 export const categories = {
-    // 获取交易列表
-    getList(params: object) {
+    // 获取分类列表
+    getList(params: object = {}) {
         return http.get("/categories", params);
     },
 };
