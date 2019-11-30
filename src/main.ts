@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { Button, Icon, Toast, Field, CellGroup, SwipeCell, Cell,
-  NavBar, Loading, RadioGroup, Radio, DatetimePicker, Picker, Panel, Dialog, PullRefresh, List } from "pagoda-mobile";
+  NavBar, Loading, RadioGroup, Radio, DatetimePicker, Picker, Panel, Dialog, PullRefresh, List, Popup } from "pagoda-mobile";
 
 import "pagoda-mobile/lib/index.css";
 import "./style/base.stylus";
@@ -26,6 +26,7 @@ Vue.use(Panel);
 Vue.use(Dialog);
 Vue.use(PullRefresh);
 Vue.use(List);
+Vue.use(Popup);
 
 new Vue({
   router,

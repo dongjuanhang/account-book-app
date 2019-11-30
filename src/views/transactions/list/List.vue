@@ -19,7 +19,7 @@
         >
           <pagoda-swipe-cell v-for="(item, index) in list"
             :key="`transaction-item-${index}`"
-            @click="edit(item)"> 
+            @click.stop="edit(item)"> 
             <pagoda-cell-group>
                 <pagoda-cell :value="`${item.isExpense ? '-' : '+'}${item.amount}`" :class="[item.isExpense ? 'cell-top-expense' :'cell-top-income']">
                   <template slot="title">

@@ -5,7 +5,7 @@
       :key="`tab-item-${index}`"
       class="tab-item"
       :class="{'active': $router.currentRoute.name.includes(tab.skip)}"
-      @click="openTab(tab)"
+      @click.stop="openTab(tab)"
     >
       <pagoda-icon
         :name="tab.icon"
