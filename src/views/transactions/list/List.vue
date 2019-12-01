@@ -15,12 +15,13 @@
           v-model="listStatus.loading"
           :finished="listStatus.finished"
           finished-text="没有更多了"
+          :error.sync="listStatus.error"
+          error-text="请求失败，点击重新加载"
           @load="requestData"
         >
           <pagoda-swipe-cell v-for="(item, index) in list"
-            :key="`transaction-item-${index}`"
-            @click.stop="edit(item)"> 
-            <pagoda-cell-group>
+            :key="`transaction-item-${index}`"> 
+            <pagoda-cell-group @click.stop="edit(item)">
                 <pagoda-cell :value="`${item.isExpense ? '-' : '+'}${item.amount}`" :class="[item.isExpense ? 'cell-top-expense' :'cell-top-income']">
                   <template slot="title">
                     <span class="circle"></span>
@@ -49,6 +50,7 @@ import { transactions } from "@/api/index";
 interface IListStatus {
   finished: boolean;
   loading: boolean;
+  error: boolean;
   isLoading: boolean;
 }
 
@@ -65,6 +67,7 @@ export default class List extends Vue {
   private listStatus: IListStatus = {
     loading: false,
     finished: false,
+    error: false,
     isLoading: false,
   };
   private pageInfo: IPageInfo = {
@@ -90,6 +93,10 @@ export default class List extends Vue {
         this.pageInfo.page++;
       }
     } catch (error) {
+      Object.assign(this.listStatus, {
+        error: true,
+        loading: false,
+      });
       this.$toast(get(error, "message") || "请求出错");
     }
   }
