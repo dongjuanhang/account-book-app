@@ -1,11 +1,16 @@
 <template>
   <div>
-    <pagoda-nav-bar title="记一笔" left-arrow>
-      <pagoda-icon name="success" slot="right" @click="handleSave"/>
+    <pagoda-nav-bar
+        title="记一笔"
+        left-arrow
+        @click-left="$router.back()"
+        @click-right="handleSave"
+    >
+      <pagoda-icon name="success" slot="right" />
     </pagoda-nav-bar>
     <pagoda-cell-group>
       <pagoda-cell title="类型">
-        <pagoda-radio-group v-model="status">
+        <pagoda-radio-group v-model="status" class="edit-types">
           <pagoda-radio name="expense">支出</pagoda-radio>
           <pagoda-radio name="income">收入</pagoda-radio>
         </pagoda-radio-group>
@@ -41,7 +46,7 @@
           autosize
           placeholder="请输入备注，最多200字"
           @input="handleChange('remark', $event)"
-          :error-message="getErrorMessage('amount')"
+          :error-message="getErrorMessage('remark')"
       />
     </pagoda-cell-group>
     <pagoda-popup
@@ -73,13 +78,13 @@
 </template>
 
 <script lang="ts">
-import {get, map, findIndex, find, indexOf, head, toString, toNumber, isNaN, set, delay, every} from 'lodash';
+import {get, map, findIndex, find, indexOf, head, toString, toNumber, isNaN, set, delay, every, size} from 'lodash';
 import {Vue, Component, Watch} from 'vue-property-decorator';
 import {categories, transactions} from '@/api';
 import {modelAdd} from '@/views/transactions/edit/validate-schema';
 @Component
 export default class Edit extends Vue {
-  public status = 'income';
+  public status = 'expense';
   public categoryList = [];
   public validateErrors = {};
   public amount = '';
@@ -97,7 +102,7 @@ export default class Edit extends Vue {
     const year = this.date.getFullYear();
     const month = this.date.getMonth() + 1;
     const date = this.date.getDate();
-    return `${year}/${month}/${date}`;
+    return `${year}/${month}/${(size(toString(date)) === 1) ? '0' : ''}${date}`;
   }
   get mode() {
     return get(this.$route, 'params.mode');
@@ -127,12 +132,14 @@ export default class Edit extends Vue {
     const res = await transactions.getTransactionDetail(code);
     const data = get(res, 'data', {});
     this.status = get(data, 'isExpense') ? 'expense' : 'income';
+    this.amount = get(data, 'amount');
     this.currentCategoryCode = get(data, 'categoryCode');
     this.date = new Date(get(data, 'date'));
     this.remark = get(data, 'remark');
   }
   public confirmDate(val: Date) {
     this.date = val;
+    this.showDate = false;
   }
   public getParams() {
     return {
@@ -177,8 +184,8 @@ export default class Edit extends Vue {
     const res = await categories.getList({type: status});
     this.categoryList = get(res, 'data.list');
   }
-  public handleAmountBlur(value: string) {
-    const amount = toNumber(value);
+  public handleAmountBlur(event: Event) {
+    const amount = toNumber(get(event, 'target.value'));
     if (isNaN(amount)) { return; }
     this.amount = amount.toFixed(2);
   }
@@ -187,7 +194,7 @@ export default class Edit extends Vue {
   }
   public handleChange(key: string, value: string) {
     set(this, key, value);
-    this.validateField(key, value);
+    this.validateField(key, {[key]: value});
   }
   public validateField(key: string, data: any) {
     const validateResult = get(modelAdd.check(data), key);
@@ -198,6 +205,7 @@ export default class Edit extends Vue {
   }
   public pickCategory(value: string, index: number) {
     this.currentCategoryCode = get(this.categoryList, `[${index}].categoryCode`);
+    this.showCategoryList = false;
   }
   public getErrorMessage(key: string) {
     return get(this.validateErrors, `${key}.errorMessage`);
@@ -212,5 +220,9 @@ export default class Edit extends Vue {
 }
 </script>
 
-<style lang="stylus">
+<style scoped>
+.edit-types {
+  display: flex;
+  justify-content: space-around;
+}
 </style>
