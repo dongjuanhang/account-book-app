@@ -70,7 +70,7 @@
           type="date"
           :value="date"
           @confirm="confirmDate"
-          @cancel="this.showDate = false"
+          @cancel="showDate = false"
       />
     </pagoda-popup>
 
